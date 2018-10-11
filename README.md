@@ -28,7 +28,7 @@ On the host system:
 * Build a new Docker image using the repository directory
 * Create a new container, setting up the desired ENV variables
 
-```
+```bash
 git clone https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App.git DockerPythonApp
 docker build DockerPythonApp -t yourname/yourtag:yourversion
 docker run ...
@@ -41,3 +41,13 @@ docker run ...
 * `APP_NAME`: name of your app. This name is given to the directory where project is cloned on
 
 Only required variable is (ENV) `GIT_REPOSITORY`.
+
+## Python Project structure
+
+The entrypoint script expects the cloned Python app to have the following structure:
+
+```
+ProjectRoot (cloned through Git)
+│   __main__.py
+│   ...and all the other files
+```
