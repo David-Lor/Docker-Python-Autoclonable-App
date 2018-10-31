@@ -4,6 +4,9 @@ FROM python:latest
 ENV GIT_REPOSITORY null
 ENV APP_NAME MyApp
 
+#Set workdir
+WORKDIR /root
+
 #Upgrade PIP
 RUN pip install --user --upgrade pip
 
