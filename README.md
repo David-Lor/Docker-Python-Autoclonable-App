@@ -1,6 +1,7 @@
-# Docker-Python-Autoclonable-App
+# Docker-Python-Autoclonable-App (Root)
 
-A Python Docker that downloads a Git repository with whatever project you want when a container runs for the first time
+A Python Docker that downloads a Git repository with whatever project you want when a container runs for the first time.
+This branch uses the default root user of the container, instead of creating a limited user at build time.
 
 ## Objective
 
@@ -27,12 +28,12 @@ On the host system:
 * Create a new container, setting up the desired ENV variables
 
 ```bash
-git clone https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App.git DockerPythonApp
+git clone -b root https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App.git DockerPythonApp
 docker build DockerPythonApp -t yourname/yourtag:yourversion
 docker run ...
 ```
 
-## ENV Variables & ARGs
+## ENV Variables
 
 * `GIT_REPOSITORY`: URL of the remote Git repository to get the app from
 * `APP_NAME`: name of your app. This name is given to the directory where project is cloned on
