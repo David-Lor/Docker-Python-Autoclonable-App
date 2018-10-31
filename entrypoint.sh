@@ -23,4 +23,4 @@ fi
 
 #Start the app
 echo "Starting the app..."
-python $APP_NAME
+python -u $APP_NAME
