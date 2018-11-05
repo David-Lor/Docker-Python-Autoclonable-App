@@ -18,7 +18,7 @@ When you create a new container and properly set the Git URL (using the `GIT_REP
 
 After this first startup, whenever the container is started, a hidden file will tell the entrypoint script that the container has been executed for the first time before, and won't clone the app through Git, just starting it.
 
-App runs with a new user created on Dockerbuild, so the app won't run with root privileges (if you want to run with root, check out the [root branch](https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App/tree/root). Everything is intended to live within /home directory of this user, so keep this in mind when you want to bind/mount a data volume for persistence.
+App runs with a new user created on Dockerbuild (_appuser_ by default), so the app won't run with root privileges (if you want to run with root, check out the [root branch](https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App/tree/root). Everything is intended to live within /home directory of this user, so keep this in mind when you want to bind/mount a data volume for persistence.
 
 ## How to build?
 
@@ -36,9 +36,9 @@ docker run ...
 
 ## ENV Variables & ARGs
 
-* (ARG) `USERNAME`: name of the user that is created on Dockerbuild to run the app with
-* `GIT_REPOSITORY`: URL of the remote Git repository to get the app from
-* `APP_NAME`: name of your app. This name is given to the directory where project is cloned on
+* (ARG) `USERNAME`: name of the user that is created on Dockerbuild to run the app with (optional, default: _appuser_)
+* `GIT_REPOSITORY`: URL of the remote Git repository to get the app from (required)
+* `APP_NAME`: name of your app. This name is given to the directory where project is cloned on (optional, default: _MyApp_)
 
 Only required variable is (ENV) `GIT_REPOSITORY`.
 
@@ -49,5 +49,6 @@ The entrypoint script expects the cloned Python app to have the following struct
 ```
 ProjectRoot (cloned through Git)
 │   __main__.py
-│   ...and all the other files
+|   requirements.txt (if required)
+│   ...and all the other project files
 ```
