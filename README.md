@@ -63,13 +63,13 @@ Source files of `root` tag are available on the [root branch](https://github.com
 If you want to build this image (required in order to change default username), you must do on host machine:
 
 * Clone this repository
-* Build a new Docker image using the repository directory
+* Build a new Docker image using the repository directory (optionally set a custom username using the `USERNAME` ARG)
 * Create a new container, setting up the desired ENV variables
 
 ```bash
 git clone https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App.git DockerPythonApp
-docker build DockerPythonApp -t yourname/yourtag:yourversion
-docker run ...
+docker build DockerPythonApp --build-arg USERNAME=<desiredUser> -t yourname/yourtag:yourversion
+docker run [...] yourname/yourtag:yourversion
 ```
 
 ## TODO
