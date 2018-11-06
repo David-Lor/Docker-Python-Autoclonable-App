@@ -23,7 +23,10 @@ App runs with a new user created on Dockerbuild (_appuser_ by default), so the a
 ## How to deploy?
 
 ```bash
-docker run -p <desired>:<ports> -e GIT_REPOSITORY:<url to a Git repository> --name <containerName> davidlor/python-autoclonable-app
+docker run -d -p <desired>:<ports> \
+-e GIT_REPOSITORY:<url to a Git repository> \
+--name <containerName> \
+davidlor/python-autoclonable-app
 ```
 
 ## ENV Variables & ARGs
