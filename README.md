@@ -18,20 +18,12 @@ When you create a new container and properly set the Git URL (using the `GIT_REP
 
 After this first startup, whenever the container is started, a hidden file will tell the entrypoint script that the container has been executed for the first time before, and won't clone the app through Git, just starting it.
 
-App runs with a new user created on Dockerbuild (_appuser_ by default), so the app won't run with root privileges (if you want to run with root, check out the [root branch](https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App/tree/root). Everything is intended to live within /home directory of this user, so keep this in mind when you want to bind/mount a data volume for persistence.
+App runs with a new user created on Dockerbuild (_appuser_ by default), so the app won't run with root privileges (if you want to run with root, check out the [Run as root](https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App/blob/master/README.md#run-as-root). Everything is intended to live within /home directory of this user, so keep this in mind when you want to bind/mount a data volume for persistence.
 
-## How to build?
-
-On the host system:
-
-* Clone this repository
-* Build a new Docker image using the repository directory
-* Create a new container, setting up the desired ENV variables
+## How to deploy?
 
 ```bash
-git clone https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App.git DockerPythonApp
-docker build DockerPythonApp -t yourname/yourtag:yourversion
-docker run ...
+docker run -p <desired>:<ports> -e GIT_REPOSITORY:<url to a Git repository> --name <containerName> davidlor/python-autoclonable-app
 ```
 
 ## ENV Variables & ARGs
@@ -52,3 +44,33 @@ ProjectRoot (cloned through Git)
 |   requirements.txt (if required)
 │   ...and all the other project files
 ```
+
+## Run as root
+
+Use the tag `root` instead of latest:
+
+```bash
+docker run [...] davidlor/python-autoclonable-app:root
+```
+
+Source files of `root` tag are available on the [root branch](https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App/tree/root).
+
+## How to build?
+
+If you want to build this image (required in order to change default username), you must do on host machine:
+
+* Clone this repository
+* Build a new Docker image using the repository directory
+* Create a new container, setting up the desired ENV variables
+
+```bash
+git clone https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App.git DockerPythonApp
+docker build DockerPythonApp -t yourname/yourtag:yourversion
+docker run ...
+```
+
+## TODO
+
+* Allow to have the Python app on any other directory than root
+* Check if git clone and Python requirements install were successful
+* Allow to change the command to execute after the entrypoint
