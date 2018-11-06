@@ -1,6 +1,8 @@
 # Docker-Python-Autoclonable-App
 
-🐍 🐳 A Python Docker that downloads a Git repository with whatever project you want when a container runs for the first time
+🐍 🐳 A Docker that downloads a Git repository with a Python app you want to deploy when a container runs for the first time
+
+DockerHub: https://hub.docker.com/r/davidlor/python-autoclonable-app/
 
 ## Objective
 
