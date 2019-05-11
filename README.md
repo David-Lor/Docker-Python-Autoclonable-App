@@ -20,7 +20,7 @@ When you create a new container and properly set the Git URL (using the `GIT_REP
 
 After this first startup, whenever the container is started, a hidden file will tell the entrypoint script that the container has been executed for the first time before, and won't clone the app through Git, just starting it.
 
-App runs with a new user created on Dockerbuild (_appuser_ by default), so the app won't run with root privileges (if you want to run with root, check out the [Run as root](https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App#run-as-root). Everything is intended to live within /home directory of this user, so keep this in mind when you want to bind/mount a data volume for persistence.
+App runs with a new user created on Dockerbuild (_appuser_ by default), so the app won't run with root privileges (if you want to run with root, check out the [Run as root](https://github.com/David-Lor/Docker-Python-Autoclonable-App#run-as-root). Everything is intended to live within /home directory of this user, so keep this in mind when you want to bind/mount a data volume for persistence.
 
 ## How to deploy?
 
@@ -58,7 +58,7 @@ Use the tag `root` instead of latest:
 docker run [...] davidlor/python-autoclonable-app:root
 ```
 
-Source files of `root` tag are available on the [root branch](https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App/tree/root).
+Source files of `root` tag are available on the [root branch](https://github.com/David-Lor/Docker-Python-Autoclonable-App/tree/root).
 
 ## How to build?
 
@@ -69,13 +69,18 @@ If you want to build this image (required in order to change default username), 
 * Create a new container, setting up the desired ENV variables
 
 ```bash
-git clone https://github.com/EnforcerZhukov/Docker-Python-Autoclonable-App.git DockerPythonApp
+git clone https://github.com/David-Lor/Docker-Python-Autoclonable-App.git DockerPythonApp
 docker build DockerPythonApp --build-arg USERNAME=<desiredUser> -t yourname/yourtag:yourversion
 docker run [...] yourname/yourtag:yourversion
 ```
 
+## Changelog
+
+- 0.0.1: Initial release.
+- 0.1.1: Check Exit code after each command executed on the entrypoint. If some part fails, the container will stop.
+
 ## TODO
 
 * Allow to have the Python app on any other directory than root
-* Check if git clone and Python requirements install were successful
+* ~~Check if git clone and Python requirements install were successful~~
 * Allow to change the command to execute after the entrypoint
