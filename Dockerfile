@@ -1,8 +1,9 @@
 FROM python:latest
 
 #ENV variables
-ENV GIT_REPOSITORY null
+ENV GIT_REPOSITORY ""
 ENV APP_NAME MyApp
+ENV SSH_KEY ""
 ARG USERNAME=appuser
 
 #Add a non-root user

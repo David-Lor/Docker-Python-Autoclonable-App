@@ -17,13 +17,42 @@ if [[ ! -f .first_execution ]]; then
 
     # Clear output directory if exists
     echo "Cleaning output directory..."
+    rm -rf keys
     rm -rf ${APP_NAME}
     checkExitCode
 
+    # Fetch private key if exists
+    if [[ ! -z ${SSH_KEY} ]]; then
+        # Save base64 Key on a file
+        echo "SSH Key detected"
+        mkdir keys
+        echo "${SSH_KEY}" > keys/ssh_key.base64
+        checkExitCode
+
+        # Decode the base64 Key and save decoded on a file
+        echo "Decoding base64 SSH key..."
+        base64 -d -i keys/ssh_key.base64 > keys/ssh_key
+        checkExitCode
+
+        # Set proper permissions to the key
+        chmod 600 keys/ssh_key
+    fi
+
     # Clone APP repository using GIT
-    echo "Cloning app through git..."
-    git clone ${GIT_REPOSITORY} ${APP_NAME}
-    checkExitCode
+    if [[ -z ${SSH_KEY} ]]; then
+        # Without SSH
+        echo "Cloning app through git..."
+        git clone ${GIT_REPOSITORY} ${APP_NAME}
+        checkExitCode
+    else
+        # With SSH
+        echo "Cloning app through git+ssh..."
+        GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i keys/ssh_key" git clone ${GIT_REPOSITORY} ${APP_NAME}
+        checkExitCode
+        # Remove SSH keys after successful clone
+        rm -rf keys
+        checkExitCode
+    fi
 
     # Install API python requirements through PIP
     echo "Installing app dependencies through pip..."
