@@ -4,6 +4,7 @@ FROM python:latest
 ENV GIT_REPOSITORY ""
 ENV APP_NAME MyApp
 ENV SSH_KEY ""
+ENV GIT_BRANCH ""
 ARG USERNAME=appuser
 
 #Add a non-root user
@@ -13,14 +14,6 @@ WORKDIR /home/$USERNAME
 
 #Upgrade PIP
 RUN pip install --user --upgrade pip
-
-#Clone API repository using Git
-#This is done on entrypoint.sh
-#git clone $GIT_REPOSITORY $APP_NAME
-
-#Install API python requirements through PIP
-#This is done on entrypoint.sh
-#RUN pip install --user --upgrade -r $APP_NAME/requirements.txt
 
 #Copy the Entrypoint script and make it executable
 USER root

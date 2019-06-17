@@ -35,7 +35,7 @@ davidlor/python-autoclonable-app
 
 If the repository is private and can be cloned using SSH instead of HTTP/S, then you must provide the SSH Private Key to the container through a ENV Variable, but encoded in Base64. **The SSH Key must have no passphrase**
 
-You can take advantage of private Github repositories and clone them as a container using this image. Just set a Deploy Key on your repository settings (learn more: https://gist.github.com/zhujunsan/a0becf82ade50ed06115)
+You can take advantage of private Github repositories and clone them as a container using this image. Just set a Deploy Key on your repository settings ([learn more](https://gist.github.com/zhujunsan/a0becf82ade50ed06115))
 
 Use the b64encode.sh script to encode your key. This will output a file with the .base64 extension, which content is used as the `SSH_KEY` ENV variable on your container.
 
@@ -53,6 +53,7 @@ davidlor/python-autoclonable-app
 ## ENV Variables & ARGs
 
 * `GIT_REPOSITORY`: URL of the remote Git repository to get the app from (required)
+* `GIT_BRANCH`: set the Branch to clone from the Git repository (optional, default: none - use Git default branch)
 * `SSH_KEY`: SSH private key, base64 encoded. Required if a SSH git repository is provided. **The SSH Key must have no passphrase** (optional, default: none)
 * `APP_NAME`: name of your app. This name is given to the directory where project is cloned on (optional, default: _MyApp_)
 * (ARG) `USERNAME`: name of the user that is created on Dockerbuild to run the app with (optional, default: _appuser_)
@@ -99,6 +100,7 @@ docker run [...] yourname/yourtag:yourversion
 - 0.0.1: Initial release.
 - 0.1.1: Check Exit code after each command executed on the entrypoint. If some part fails, the container will stop.
 - 0.2.1: Option to provide a SSH private key through ENV (encoded in base64).
+- 0.2.2: Option to set the GIT Branch to clone
 
 ## TODO
 

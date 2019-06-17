@@ -38,11 +38,16 @@ if [[ ! -f .first_execution ]]; then
         chmod 600 keys/ssh_key
     fi
 
+    # Get GIT Branch option if exists
+    if [[ ! -z ${GIT_BRANCH} ]]; then
+        git_branch_options=(--branch ${GIT_BRANCH})
+    fi
+
     # Clone APP repository using GIT
     if [[ -z ${SSH_KEY} ]]; then
         # Without SSH
         echo "Cloning app through git..."
-        git clone ${GIT_REPOSITORY} ${APP_NAME}
+        git clone --branch ${GIT_BRANCH} ${GIT_REPOSITORY} ${APP_NAME}
         checkExitCode
     else
         # With SSH
