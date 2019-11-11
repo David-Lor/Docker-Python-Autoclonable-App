@@ -1,27 +1,30 @@
-FROM python:latest
+# ARG variables
+ARG USERNAME=appuser
+ARG IMAGE_TAG=latest
 
-#ENV variables
+# Base image (tag from ARG)
+FROM python:$IMAGE_TAG
+
+# ENV variables
 ENV GIT_REPOSITORY ""
 ENV APP_NAME MyApp
 ENV SSH_KEY ""
 ENV GIT_BRANCH ""
-ARG USERNAME=appuser
 
-#Add a non-root user
+# Add a non-root user
 RUN useradd -ms /bin/bash $USERNAME
+
+# Copy the Entrypoint script and make it executable
+COPY entrypoint.sh /entrypoint.sh
+COPY setup_app.py /setup_app.py
+RUN chmod u+x entrypoint.sh
+
+# Change user and directory
 USER $USERNAME
 WORKDIR /home/$USERNAME
 
-#Upgrade PIP
+# Upgrade PIP
 RUN pip install --user --upgrade pip
 
-#Copy the Entrypoint script and make it executable
-USER root
-COPY entrypoint.sh entrypoint.sh
-RUN chown $USERNAME entrypoint.sh
-USER $USERNAME
-RUN chmod u+x entrypoint.sh
-
-#Execute the entrypoint
-CMD ["./entrypoint.sh"]
-
+# Execute the entrypoint
+CMD ["/entrypoint.sh"]
