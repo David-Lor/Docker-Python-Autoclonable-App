@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  python-helloworld:
+    container_name: python_helloworld
+    image: davidlor/python-autoclonable-app
+    environment:
+      - GIT_REPOSITORY=https://github.com/David-Lor/Python-HelloWorld
+      - APP_NAME=HelloWorld

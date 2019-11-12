@@ -1,7 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
 set -ex
 
-cd $HOME
-python -u /setup_app.py
+python -u setup_app.py
 python -u ${APP_NAME}
