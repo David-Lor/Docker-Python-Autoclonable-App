@@ -2,7 +2,7 @@
 """
 
 import os
-import git
+import subprocess
 from contextlib import suppress
 from pip._internal.main import main as pipmain
 
@@ -16,12 +16,13 @@ class Settings:
             self.app_name = os.environ["APP_NAME"]
             self.git_repository = os.environ["GIT_REPOSITORY"]
         except KeyError as error:
-            print("Error! Environment variable not defined: {}".format(error))
-            exit(1)
+            raise Exception("Error! Environment variable not defined: {}".format(error))
+        
         self.base_dir = os.path.expanduser("~")
         self.first_run_file = self.join_home(self.FIRST_RUN_FILENAME)
         self.app_dir = self.join_home(self.app_name)
         self.requirements_file = self.join_app(self.REQUIREMENTS_FILENAME)
+        self.git_branch = os.getenv("GIT_BRANCH")
     
     def join_home(self, path):
         return os.path.join(self.base_dir, path)
@@ -47,8 +48,14 @@ def clear_output_dir(settings):
 
 def clone(settings):
     print("Cloning app through Git...")
-    # TODO Clone specific branch | or use subprocess
-    git.Repo.clone_from(url=settings.git_repository, to_path=settings.app_dir)
+    branch_settings = []
+    if settings.git_branch:
+        branch_settings = ["--branch", settings.git_branch]
+
+    result = subprocess.call(["git", "clone", *branch_settings, settings.git_repository, settings.app_dir])
+    if result > 0:
+        raise Exception("Error! Git Clone failed!")
+    
     print("App cloned through Git!")
 
 
@@ -63,14 +70,20 @@ def install_requirements(settings):
 
 
 if __name__ == "__main__":
-    settings = Settings()
-    args = (settings,)
+    try:
+        settings = Settings()
+        args = (settings,)
 
-    if is_first_run(*args):
-        print("This is container first run, running app installing process...")
-        clear_output_dir(*args)
-        clone(*args)
-        install_requirements(*args)
-        save_setup_done(*args)
-    else:
-        print("App already installed")
+        if is_first_run(*args):
+            print("This is container first run, running app installing process...")
+            clear_output_dir(*args)
+            clone(*args)
+            install_requirements(*args)
+            save_setup_done(*args)
+            print("Setup completed! Ready to run the app!")
+        
+        else:
+            print("App already installed")
+
+    except Exception as ex:
+        print(ex)

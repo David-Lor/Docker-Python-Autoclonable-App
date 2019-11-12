@@ -59,6 +59,12 @@ ProjectRoot (cloned through Git)
 │-  ...and all the other project files/directories
 ```
 
+Some examples of projects compliant with this structure are:
+
+- [Python-HelloWorld](https://github.com/David-Lor/Python-HelloWorld) (used as Git repository for testing this image)
+- [MQTT2ETCD](https://github.com/David-Lor/MQTT2ETCD)
+- [VigoBusAPI](https://github.com/David-Lor/Python_VigoBusAPI)
+
 ## How to build
 
 If you want to build this image (required in order to change default username or base image tag), you must do on host machine:
@@ -66,7 +72,7 @@ If you want to build this image (required in order to change default username or
 - Clone this repository
 - Build a new Docker image using the repository directory - you can optionally set these ARGs:
     - a custom username using the `USERNAME` ARG
-    - a custom Python base image tag using the `IMAGE_TAG` ARG
+    - a custom [Python base image](https://hub.docker.com/_/python/) tag using the `IMAGE_TAG` ARG (example: `alpine` or `slim`)
 - Create a new container, setting up the desired ENV variables
 
 ```bash
@@ -77,7 +83,8 @@ docker run [...] yourname/yourtag:yourversion
 
 ## TODO
 
-- Set branch on setup_app script (probably use subprocess instead of GitPython lib)
 - Run as root with a env variable - or another image tag
 - Load SSH key from directory for cloning SSH git repositories
-- Create a Github Action to build and push multiple tags to DockerHub (if possible all the tags available on the Python base image)
+- Make scripts readable, executable but not writable by the Docker user
+- Catch errors while installing requirements through Pip
+- Create Github Actions to build and push multiple tags to DockerHub (if possible all the tags available on the Python base image)

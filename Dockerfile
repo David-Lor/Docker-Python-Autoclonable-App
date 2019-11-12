@@ -13,6 +13,7 @@ RUN useradd -ms /bin/bash $USERNAME || (addgroup $USERNAME && adduser $USERNAME 
 # Copy entrypoint & setup scripts, change ownership, set executable
 COPY entrypoint.sh /home/$USERNAME/entrypoint.sh
 COPY setup_app.py /home/$USERNAME/setup_app.py
+# TODO scripts should be readable but not writable by the user?
 RUN chown $USERNAME:$USERNAME /home/$USERNAME/entrypoint.sh /home/$USERNAME/setup_app.py
 RUN chmod u+x /home/$USERNAME/entrypoint.sh
 
@@ -27,7 +28,6 @@ WORKDIR /home/$USERNAME
 # Upgrade PIP and install dependencies
 # TODO Add no-cache/lightweight options
 RUN pip install --user --upgrade pip
-RUN pip install --user GitPython
 
 # Execute the entrypoint
 CMD ["./entrypoint.sh"]
