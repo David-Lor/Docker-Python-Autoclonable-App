@@ -4,7 +4,6 @@
 import os
 import subprocess
 from contextlib import suppress
-from pip._internal.main import main as pipmain
 
 
 class Settings:
@@ -62,8 +61,10 @@ def clone(settings):
 def install_requirements(settings):
     if os.path.isfile(settings.requirements_file):
         print("Installing requirements through Pip...")
-        pipmain(["install", "--user", "-r", settings.requirements_file])
-        # TODO errors during install do not raise exception?
+        result = subprocess.call(["pip", "install", "--user", "-r", settings.requirements_file])
+        if result > 0:
+            raise Exception("Error! Pip requirements install failed!")
+
         print("Requirements installed through Pip!")
     else:
         print("No requirements.txt file found")
@@ -87,3 +88,4 @@ if __name__ == "__main__":
 
     except Exception as ex:
         print(ex)
+        exit(1)

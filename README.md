@@ -17,7 +17,7 @@ Any update on the project can be downloaded by just rebuilding the container.
 ## Changelog
 
 - 1.0.1 - Rewrite Dockerfile (__NOT DEPLOYED YET to DockerHub!__):
-    - Python setup script
+    - App setup script written in Python
     - Change Python base image tag through ARG
 - 0.2.2 - Option to set the GIT Branch to clone
 - 0.2.1 - Option to provide a SSH private key through ENV (encoded in base64).
@@ -26,8 +26,8 @@ Any update on the project can be downloaded by just rebuilding the container.
 
 ## How does it work
 
-When you create a new container and properly set the Git URL (using the `GIT_REPOSITORY` ENV), during the first execution, 
-the entrypoint bash script will clone the repository in your container, install all the Python requirements through pip, 
+When you create a new container and properly set the Git URL (using the `GIT_REPOSITORY` ENV), during the first execution
+the entrypoint script will clone the repository in your container, install all the Python requirements through pip, 
 and start it. After this first startup, the next time/s the container starts, the setup process is skipped.
 
 App runs with a new user created on Dockerbuild (_appuser_ by default), so the app won't run with root privileges.
@@ -85,5 +85,4 @@ docker run [...] yourname/yourtag:yourversion
 
 - Run as root with a env variable - or another image tag
 - Load SSH key from directory for cloning SSH git repositories
-- Catch errors while installing requirements through Pip
 - Create Github Actions to build and push multiple tags to DockerHub (if possible all the tags available on the Python base image)
