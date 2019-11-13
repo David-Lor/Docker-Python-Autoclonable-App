@@ -10,12 +10,10 @@ ARG USERNAME=appuser
 # Add a non-root user
 RUN useradd -ms /bin/bash $USERNAME || (addgroup $USERNAME && adduser $USERNAME -D -G $USERNAME)
 
-# Copy entrypoint & setup scripts, change ownership, set executable
-COPY entrypoint.sh /home/$USERNAME/entrypoint.sh
-COPY setup_app.py /home/$USERNAME/setup_app.py
-# TODO scripts should be readable but not writable by the user?
-RUN chown $USERNAME:$USERNAME /home/$USERNAME/entrypoint.sh /home/$USERNAME/setup_app.py
-RUN chmod u+x /home/$USERNAME/entrypoint.sh
+# Copy entrypoint & setup scripts, set executable
+COPY entrypoint.sh /entrypoint.sh
+COPY setup_app.py /setup_app.py
+RUN chmod +x /entrypoint.sh
 
 # Install git if not installed
 # TODO Add no-cache/lightweight options
@@ -30,4 +28,4 @@ WORKDIR /home/$USERNAME
 RUN pip install --user --upgrade pip
 
 # Execute the entrypoint
-CMD ["./entrypoint.sh"]
+CMD ["/entrypoint.sh"]

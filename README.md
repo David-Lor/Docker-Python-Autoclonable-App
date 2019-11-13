@@ -85,6 +85,5 @@ docker run [...] yourname/yourtag:yourversion
 
 - Run as root with a env variable - or another image tag
 - Load SSH key from directory for cloning SSH git repositories
-- Make scripts readable, executable but not writable by the Docker user
 - Catch errors while installing requirements through Pip
 - Create Github Actions to build and push multiple tags to DockerHub (if possible all the tags available on the Python base image)
