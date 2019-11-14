@@ -1,4 +1,6 @@
 examples/
+tools/
+tests/
 .git*
 .idea/
 *.md

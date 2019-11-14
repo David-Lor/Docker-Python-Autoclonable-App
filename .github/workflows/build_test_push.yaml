@@ -1,0 +1,37 @@
+name: Build, Test & Push
+on:
+  - push
+
+jobs:
+  build_test_push:
+    name: Build, Test & Push (with python:${{ matrix.base_image }})
+    strategy:
+      matrix:
+        base_image:
+          - latest
+          - slim
+          - alpine
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: Build Docker image
+        run: >-
+          sudo IMAGE_NAME="davidlor/python-autoclonable-app"
+          BASE_IMAGE_TAG="${{ matrix.base_image }}"
+          IMAGE_TAG="${{ matrix.base_image }}$(bash tools/get_image_suffix.sh)"
+          bash tools/build.sh
+      - name: Run tests
+        run: >-
+          sudo IMAGE_NAME="davidlor/python-autoclonable-app"
+          IMAGE_TAG="${{ matrix.base_image }}$(bash tools/get_image_suffix.sh)"
+          bash tests/test.sh
+      - name: Publish to DockerHub
+        if: github.ref == 'master' || github.ref == 'develop'
+        run: >-
+          sudo docker login --username $DOCKER_USER --password $DOCKER_PASS &&
+          sudo docker push "${{ matrix.base_image }}$(bash tools/get_image_suffix.sh)"
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
