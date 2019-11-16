@@ -28,10 +28,10 @@ jobs:
           IMAGE_TAG="${{ matrix.base_image }}$(bash tools/get_image_suffix.sh)"
           bash tests/test.sh
       - name: Publish to DockerHub
-        if: github.ref == 'master' || github.ref == 'develop'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
         run: >-
           sudo docker login --username $DOCKER_USER --password $DOCKER_PASS &&
-          sudo docker push "${{ matrix.base_image }}$(bash tools/get_image_suffix.sh)"
+          sudo docker push "davidlor/python-autoclonable-app:${{ matrix.base_image }}$(bash tools/get_image_suffix.sh)"
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           DOCKER_PASS: ${{ secrets.DOCKER_PASS }}

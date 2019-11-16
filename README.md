@@ -64,6 +64,7 @@ Some examples of projects compliant with this structure are:
 - [Python-HelloWorld](https://github.com/David-Lor/Python-HelloWorld) (used as Git repository for testing this image)
 - [MQTT2ETCD](https://github.com/David-Lor/MQTT2ETCD)
 - [VigoBusAPI](https://github.com/David-Lor/Python_VigoBusAPI)
+- [VigoBusTelegramBot](https://github.com/David-Lor/VigoBus-TelegramBot/)
 
 ## Tags & Builds
 
@@ -83,7 +84,7 @@ If you want to build this image (required in order to change default username or
 
 ```bash
 git clone https://github.com/David-Lor/Docker-Python-Autoclonable-App.git DockerPythonApp
-docker build DockerPythonApp --build-arg USERNAME=<desiredUser> -t yourname/yourtag:yourversion
+docker build DockerPythonApp --build-arg USERNAME=<desiredUser> --build-arg IMAGE_TAG=<baseTag> -t yourname/yourtag:yourversion
 docker run [...] yourname/yourtag:yourversion
 ```
 
@@ -91,4 +92,4 @@ docker run [...] yourname/yourtag:yourversion
 
 - Run as root with a env variable - or another image tag
 - Load SSH key from directory for cloning SSH git repositories
-- Create Github Actions to build and push multiple tags to DockerHub (if possible all the tags available on the Python base image)
+- Push version tags to DockerHub from Github Actions workflow
