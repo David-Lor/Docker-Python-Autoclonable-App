@@ -70,7 +70,7 @@ def install_requirements(settings):
         print("No requirements.txt file found")
 
 
-if __name__ == "__main__":
+def run():
     try:
         settings = Settings()
         args = (settings,)
@@ -82,10 +82,14 @@ if __name__ == "__main__":
             install_requirements(*args)
             save_setup_done(*args)
             print("Setup completed! Ready to run the app!")
-        
+
         else:
             print("App already installed")
 
     except Exception as ex:
         print(ex)
         exit(1)
+
+
+if __name__ == "__main__":
+    run()

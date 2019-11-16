@@ -65,6 +65,12 @@ Some examples of projects compliant with this structure are:
 - [MQTT2ETCD](https://github.com/David-Lor/MQTT2ETCD)
 - [VigoBusAPI](https://github.com/David-Lor/Python_VigoBusAPI)
 
+## Tags & Builds
+
+- The images are built and uploaded automatically, based on the tags `latest`, `slim` and `alpine` of the base Python image,
+    on each push on the `master` branch.
+- Each push on the `develop` branch triggers a new image with the sufix `-dev`
+
 ## How to build
 
 If you want to build this image (required in order to change default username or base image tag), you must do on host machine:

@@ -2,5 +2,5 @@
 
 set -ex
 
-bash test_repository_ok.sh
-bash test_repository_ko.sh
+bash tests/test_repository_ok.sh
+bash tests/test_repository_ko.sh

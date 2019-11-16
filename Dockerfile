@@ -17,7 +17,7 @@ RUN chmod +x /entrypoint.sh
 
 # Install git if not installed
 # TODO Add no-cache/lightweight options
-RUN which git || ((apt-get update && apt-get -y install git) || (apk update && apk add git))
+RUN which git || ((apt-get update && apt-get -y install git) || (apk update --no-cache && apk add --no-cache git))
 
 # Change user and working directory
 USER $USERNAME
