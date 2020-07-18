@@ -1,5 +1,7 @@
 # Docker-Python-Autoclonable-App
 
+**IMPORTANT: this repository is deprecated. The project is replaced with: https://github.com/David-Lor/Docker-Python-Git-App** (same functionality)
+
 🐍 🐳 A Docker that downloads a Git repository with a Python app you want to deploy when a container runs for the first time
 
 DockerHub: https://hub.docker.com/r/davidlor/python-autoclonable-app/
